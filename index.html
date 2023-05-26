@@ -5,9 +5,15 @@
 
     <title>word-guesses</title>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="style.css" />
 
-    <script src="ParseWordListForWordle.js"></script>
+    <script src="main.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <label for="search"
+      >Enter known letters (use space or '-' for positions of unknown
+      letters)</label
+    >
+    <input id="search" type="text" max="5" />
+  </body>
 </html>
