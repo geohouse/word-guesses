@@ -15,6 +15,32 @@ fetch(
 
 //console.log(wordList);
 
+// Initialize the table by looping through the desired number of rows first, creating those
+// then looping through the desired number of columns, adding a cell in each row for
+// each desired column. Set the ID of each table cell to be the <rowNum>-<colNum> (0-based)
+function makeWordTable(completedWordObject) {
+  // reset the table.
+  wordTable = document.getElementById("word-table");
+  wordTable.innerHTML = "";
+  console.log("in make word table");
+
+  for (let i = 0; i < Object.keys(completedWordObject).length; i++) {
+    wordTableRow = document.createElement("tr");
+    wordTable.appendChild(wordTableRow);
+
+    createdWordCell = document.createElement("td");
+    //createdWordCell.id = currRow + "-" + currCol;
+    // Make a unique id value for each cell to enable word path lookup and clickability.
+    createdWordCell.id = i;
+    // Will have multiple classes for CSS (depending on whether selected or not too),
+    // so need to use classList.add() here to add a class to the existing class list.
+    createdWordCell.className = "word-cell";
+    createdWordCell.innerHTML = completedWordObject[i];
+
+    wordTableRow.appendChild(createdWordCell);
+  }
+}
+
 searchInput = document.querySelector("#search");
 searchInput.addEventListener("input", () => {
   let searchString = searchInput.value;
@@ -26,8 +52,9 @@ searchInput.addEventListener("input", () => {
   // Now need to convert that string into the regex to use for searching
   // against the word list
   // if searchString is 'a*p-e', searchStringForLookup will be /a/\wp\we/
+  // regex anchor to the start of the string
   let searchRegexForLookup = new RegExp(
-    searchString.replaceAll(searchRegex, "\\w")
+    "^" + searchString.replaceAll(searchRegex, "\\w")
   );
 
   let outputWordList = [];
@@ -37,4 +64,5 @@ searchInput.addEventListener("input", () => {
     }
   });
   console.log(outputWordList);
+  makeWordTable(outputWordList);
 });
