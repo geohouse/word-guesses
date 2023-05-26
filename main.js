@@ -23,5 +23,18 @@ searchInput.addEventListener("input", () => {
   // in prep to turn into a regex to match against the word list
   // global regex needed for replaceAll, matches '*', all white space, and '-'
   const searchRegex = /[*\s-]/g;
-  let searchStringForLookup = searchString.replaceAll(regex, "w");
+  // Now need to convert that string into the regex to use for searching
+  // against the word list
+  // if searchString is 'a*p-e', searchStringForLookup will be /a/\wp\we/
+  let searchRegexForLookup = new RegExp(
+    searchString.replaceAll(searchRegex, "\\w")
+  );
+
+  let outputWordList = [];
+  wordList.forEach((word) => {
+    if (searchRegexForLookup.test(word)) {
+      outputWordList.push(word);
+    }
+  });
+  console.log(outputWordList);
 });
