@@ -58,11 +58,16 @@ searchInput.addEventListener("input", () => {
   );
 
   let outputWordList = [];
-  wordList.forEach((word) => {
+  // Only show the word list is a search string is entered
+  // (This is to make rendering faster by preventing regex testing the whole list)
+  // If want to show the whole list, put a leading space in the input.
+  if(searchString !== ""){
+    wordList.forEach((word) => {
     if (searchRegexForLookup.test(word)) {
       outputWordList.push(word);
     }
   });
+}
   console.log(outputWordList);
   makeWordTable(outputWordList);
 });
